@@ -11,14 +11,14 @@ server.use(middlewares);
 
 // Define a custom route for case-insensitive search
 server.get("/realEstateListing", (req, res) => {
-  const { q } = req.query;
+  const { address_like } = req.query;
 
-  if (!q) {
+  if (!address_like) {
     // If no search query is provided, return all data
     res.jsonp(router.db.get("realEstateListing").value());
   } else {
     // Perform case-insensitive search on the 'title' field
-    const searchTerm = q.toLowerCase();
+    const searchTerm = address_like.toLowerCase();
     const results = router.db
       .get("realEstateListing")
       .filter((item) => item.address.toLowerCase().includes(searchTerm))
